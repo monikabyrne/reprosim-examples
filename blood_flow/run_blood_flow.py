@@ -1,8 +1,6 @@
 #!/usr/bin/env python
  
-#This routine reads in an arterial tree and solves the static lung
-#perfusion model as published in Burrowes et al. 2009 Ann Biomed Eng
-#Vol 37, pp 2497-2509The model reads in an arterial tree only and #solves Pressure-Resistance-Flow equations within this tree for compliant vessels. Pressure is defined at terminal arteries as a function of gravitational height.
+#This routine reads in an arterial tree and solves Pressure-Resistance-Flow equations within this tree.
 import time
 from reprosim.diagnostics import set_diagnostics_level
 from reprosim.indices import perfusion_indices, get_ne_radius
@@ -21,7 +19,7 @@ def main():
     define_node_geometry('Bigger.ipnode')
     define_1d_elements('Bigger.ipelem')
   
-    #defines capillaries, useful for outputs
+    #defines capillaries
     append_units()
    
     #creates a mesh that converges (a venous mesh)
@@ -32,7 +30,6 @@ def main():
     inlet_rad=3.0 #inlet radius
     order_system = 'strahler'
     order_options = 'arterial'
-    #order_options = 'all'
     name = 'inlet'
     define_rad_from_geom(order_system, s_ratio, name, inlet_rad, order_options,'')
     #defines radius by STrahler order in converging (venous mesh)
@@ -40,7 +37,6 @@ def main():
     inlet_rad_ven=5.0 #inlet radius
     order_system = 'strahler'
     order_options = 'venous'
-    #order_options = 'list'
     first_ven_no='' #number of elements read in plus one
     last_ven_no='' #2x the original number of elements + number of connections
     define_rad_from_geom(order_system, s_ratio_ven, first_ven_no, inlet_rad_ven, order_options,last_ven_no)
