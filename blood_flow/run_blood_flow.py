@@ -28,13 +28,13 @@ def main():
     if mesh_type == 'full_plus_tube':
         add_venous_vessels = True
 
+    #defines capillaries
+    append_units()
+
     if add_venous_vessels:
-        #defines capillaries
-        append_units()
         #creates a mesh that converges (a venous mesh)
         add_matching_mesh()
 
-    if add_venous_vessels:
         # define radius by Strahler order in diverging (arterial mesh)
         s_ratio = 1.54  # rate of decrease in radius at each order of the arterial tree
         inlet_rad = 3.0  # inlet radius
