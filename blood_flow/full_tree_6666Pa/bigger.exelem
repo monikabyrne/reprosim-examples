@@ -1,0 +1,146 @@
+ Group name: perf_model
+ Shape.  Dimension=1
+ #Scale factor sets=1
+   l.Lagrange, #Scale factors= 2
+ #Nodes= 2
+ #Fields= 1
+ 1) coordinates, coordinate, rectangular cartesian, #Components=3
+   x.  l.Lagrange, no modify, standard node based.
+     #Nodes= 2
+      1.  #Values=1
+       Value indices:      1 
+       Scale factor indices:   1
+      2.  #Values=1
+       Value indices:      1 
+       Scale factor indices:   2
+   y.  l.Lagrange, no modify, standard node based.
+     #Nodes= 2
+      1.  #Values=1
+       Value indices:      1 
+       Scale factor indices:   1
+      2.  #Values=1
+       Value indices:      1 
+       Scale factor indices:   2
+   z.  l.Lagrange, no modify, standard node based.
+     #Nodes= 2
+      1.  #Values=1
+       Value indices:      1 
+       Scale factor indices:   1
+      2.  #Values=1
+       Value indices:      1 
+       Scale factor indices:   2
+ Element:            1 0 0
+   Nodes:
+                1            2
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:            2 0 0
+   Nodes:
+                2            3
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:            3 0 0
+   Nodes:
+                2            4
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:            4 0 0
+   Nodes:
+                4            5
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:            5 0 0
+   Nodes:
+                4            6
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:            6 0 0
+   Nodes:
+                5            7
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:            7 0 0
+   Nodes:
+                5            8
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:            8 0 0
+   Nodes:
+                6            9
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:            9 0 0
+   Nodes:
+                6           10
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           10 0 0
+   Nodes:
+               12           11
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           11 0 0
+   Nodes:
+               13           12
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           12 0 0
+   Nodes:
+               14           12
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           13 0 0
+   Nodes:
+               15           14
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           14 0 0
+   Nodes:
+               16           14
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           15 0 0
+   Nodes:
+               17           15
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           16 0 0
+   Nodes:
+               18           15
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           17 0 0
+   Nodes:
+               19           16
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           18 0 0
+   Nodes:
+               20           16
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           19 0 0
+   Nodes:
+                3           13
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           20 0 0
+   Nodes:
+                7           17
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           21 0 0
+   Nodes:
+                8           18
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           22 0 0
+   Nodes:
+                9           19
+   Scale factors:
+      0.10000E+01  0.10000E+01
+ Element:           23 0 0
+   Nodes:
+               10           20
+   Scale factors:
+      0.10000E+01  0.10000E+01

@@ -8,70 +8,25 @@
   #xi1=1
  Element:            1 0 0
    Values:
-      0.17346E+05  0.17346E+05
+      0.11167E+06  0.11167E+06
  Element:            2 0 0
    Values:
-      0.41820E+04  0.41820E+04
+      0.55833E+05  0.55833E+05
  Element:            3 0 0
    Values:
-      0.13164E+05  0.13164E+05
+      0.55833E+05  0.55833E+05
  Element:            4 0 0
    Values:
-      0.65819E+04  0.65819E+04
+      0.11167E+06  0.11167E+06
  Element:            5 0 0
    Values:
-      0.65819E+04  0.65819E+04
+      0.55833E+05  0.55833E+05
  Element:            6 0 0
    Values:
-      0.32910E+04  0.32910E+04
+      0.55833E+05  0.55833E+05
  Element:            7 0 0
    Values:
-      0.32910E+04  0.32910E+04
+      0.55833E+05  0.55833E+05
  Element:            8 0 0
    Values:
-      0.32910E+04  0.32910E+04
- Element:            9 0 0
-   Values:
-      0.32910E+04  0.32910E+04
- Element:           10 0 0
-   Values:
-      0.17346E+05  0.17346E+05
- Element:           11 0 0
-   Values:
-      0.41820E+04  0.41820E+04
- Element:           12 0 0
-   Values:
-      0.13164E+05  0.13164E+05
- Element:           13 0 0
-   Values:
-      0.65819E+04  0.65819E+04
- Element:           14 0 0
-   Values:
-      0.65819E+04  0.65819E+04
- Element:           15 0 0
-   Values:
-      0.32910E+04  0.32910E+04
- Element:           16 0 0
-   Values:
-      0.32910E+04  0.32910E+04
- Element:           17 0 0
-   Values:
-      0.32910E+04  0.32910E+04
- Element:           18 0 0
-   Values:
-      0.32910E+04  0.32910E+04
- Element:           19 0 0
-   Values:
-      0.41820E+04  0.41820E+04
- Element:           20 0 0
-   Values:
-      0.32910E+04  0.32910E+04
- Element:           21 0 0
-   Values:
-      0.32910E+04  0.32910E+04
- Element:           22 0 0
-   Values:
-      0.32910E+04  0.32910E+04
- Element:           23 0 0
-   Values:
-      0.32910E+04  0.32910E+04
+      0.55833E+05  0.55833E+05

@@ -1,0 +1,44 @@
+ Group name: perf_model
+ #Fields=1
+ 1) pressure_perf, field, rectangular cartesian, #Components=1
+  1.  Value index=1, #Derivatives=0
+ Node:            1
+    1995.000000
+ Node:            2
+    1994.999950
+ Node:            3
+    1994.999725
+ Node:            4
+    1994.999921
+ Node:            5
+    1994.999842
+ Node:            6
+    1994.999842
+ Node:            7
+    1994.999664
+ Node:            8
+    1994.999664
+ Node:            9
+    1994.999664
+ Node:           10
+    1994.999664
+ Node:           11
+     665.000000
+ Node:           12
+     665.000007
+ Node:           13
+     665.000037
+ Node:           14
+     665.000010
+ Node:           15
+     665.000021
+ Node:           16
+     665.000021
+ Node:           17
+     665.000045
+ Node:           18
+     665.000045
+ Node:           19
+     665.000045
+ Node:           20
+     665.000045

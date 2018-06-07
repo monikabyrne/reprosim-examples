@@ -5,7 +5,7 @@ import time
 from reprosim.diagnostics import set_diagnostics_level
 from reprosim.indices import perfusion_indices, get_ne_radius
 from reprosim.geometry import append_units,define_node_geometry, define_1d_elements,define_rad_from_geom,add_matching_mesh, \
-        set_capillary_values,calc_capillary_unit_length
+        calc_capillary_unit_length
 from reprosim.exports import export_1d_elem_geometry, export_node_geometry, export_1d_elem_field,export_node_field,export_terminal_perfusion
 from reprosim.pressure_resistance_flow import evaluate_prq
 
@@ -17,8 +17,10 @@ def main():
     perfusion_indices()
  
     #Read in geometry files
-    define_node_geometry('Bigger.ipnode')
-    define_1d_elements('Bigger.ipelem')
+    define_node_geometry('Small.ipnode')
+    define_1d_elements('Small.ipelem')
+    #define_node_geometry('Bigger.ipnode')
+    #define_1d_elements('Bigger.ipelem')
     #define_node_geometry('FullTree.ipnode')
     #define_1d_elements('FullTree.ipelem')
 
@@ -57,8 +59,7 @@ def main():
 
         num_convolutes = 6  # number of terminal convolute connections
         num_generations = 3  # number of generations of symmetric intermediate villous trees
-        set_capillary_values(num_convolutes,num_generations)
-        calc_capillary_unit_length()
+        calc_capillary_unit_length(num_convolutes,num_generations)
     else:
         # define radius by Strahler order
         s_ratio = 1.54  # rate of decrease in radius at each order of the arterial tree
@@ -71,21 +72,23 @@ def main():
     #Call solve
     bc_type = 'pressure' # 'pressure' or 'flow'
     if  bc_type == 'pressure':
-        inlet_pressure = 6666 #Pa (~50mmHg)
-        outlet_pressure = 2666 #Pa (~20mmHg)
+        inlet_pressure = 6650 #Pa (~50mmHg)
+        outlet_pressure = 2660 #Pa (~20mmHg)
         inlet_flow = 0 #set to 0 for bc_type = pressure;
 
     if  bc_type == 'flow':
         inlet_pressure = 0
-        outlet_pressure = 0
-        inlet_flow = 29.34 #set to 0 for bc_type = pressure; inlet_flow=0.0047482 !9branches plus venous; inlet_flow=29.34 win's tree
+        outlet_pressure = 2660
+        inlet_flow = 111666.7 #set to 0 for bc_type = pressure; small tree: 111666.7 without capillary resistance !9branches plus venous;  win's tree
 
     evaluate_prq(mesh_type,bc_type,inlet_flow,inlet_pressure,outlet_pressure)
  
     ##export geometry
     group_name = 'perf_model'
-    export_1d_elem_geometry('Output/bigger.exelem', group_name)
-    export_node_geometry('Output/bigger.exnode', group_name)
+    export_1d_elem_geometry('Output/small.exelem', group_name)
+    export_node_geometry('Output/small.exnode', group_name)
+    #export_1d_elem_geometry('Output/bigger.exelem', group_name)
+    #export_node_geometry('Output/bigger.exnode', group_name)
     #export_1d_elem_geometry('Output/full_tree.exelem', group_name)
     #export_node_geometry('Output/full_tree.exnode', group_name)
 
