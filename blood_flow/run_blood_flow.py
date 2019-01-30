@@ -26,8 +26,8 @@ def main():
     #define_node_geometry('bigger_venous.ipnode')
     #define_1d_elements('bigger_venous.ipelem')
     #define_1d_elements('Bigger_reordered_elems.ipelem')
-    #define_node_geometry('FullTree.ipnode')
-    #define_1d_elements('FullTree.ipelem')
+    #define_node_geometry('full_tree.ipnode')
+    #define_1d_elements('full_tree.ipelem')
     #define_node_geometry('new_nodes_v10.ipnode')
     #define_1d_elements('new_elems_v10.ipelem')
     #define_node_geometry('chor_nodes_cycle2_v7.ipnode')
@@ -123,9 +123,9 @@ def main():
     if  bc_type == 'flow':
         inlet_pressure = 0
         outlet_pressure = 2660
-        inlet_flow = 111666.7 # mm³/s
+        inlet_flow = 111666.7 # mm3/s
         #set to 0 for bc_type = pressure; small tree: 111666.7 without capillary resistance !9branches plus venous;  win's tree
-        #250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm³/s
+        #250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
 
     evaluate_prq(mesh_type,bc_type,inlet_flow,inlet_pressure,outlet_pressure)
  
@@ -157,7 +157,6 @@ def main():
     filename = 'Output/flow_perf.exelem'
     field_name = 'flow'
     export_1d_elem_field(7,filename, group_name, field_name)
- 
  
     #export node field for pressure
     filename='Output/pressure_perf.exnode'
