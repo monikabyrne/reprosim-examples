@@ -7,7 +7,7 @@ from reprosim.indices import perfusion_indices, get_ne_radius
 from reprosim.geometry import append_units,define_node_geometry, define_1d_elements,define_rad_from_geom,add_matching_mesh, \
         calc_capillary_unit_length,define_rad_from_file
 from reprosim.exports import export_1d_elem_geometry, export_node_geometry, export_1d_elem_field,export_node_field,export_terminal_perfusion
-from reprosim.pressure_resistance_flow import evaluate_prq
+from reprosim.pressure_resistance_flow import evaluate_prq, calculate_stats
 
 def main():
     start = time.clock()
@@ -21,13 +21,17 @@ def main():
     #define_1d_elements('Small.ipelem')
     #define_node_geometry('Bigger.ipnode')
     #define_1d_elements('Bigger.ipelem')
-    define_node_geometry('bigger_umb_art.ipnode')
-    define_1d_elements('bigger_umb_art.ipelem')
-    #define_node_geometry('bigger_venous.ipnode')
-    #define_1d_elements('bigger_venous.ipelem')
+    #define_node_geometry('bigger_umb_art.ipnode')
+    #define_1d_elements('bigger_umb_art.ipelem')
+    #define_node_geometry('bigger_anast.ipnode')
+    #anastomosis_elem = 7
+    #define_1d_elements('bigger_anast.ipelem',anastomosis_elem)
     #define_1d_elements('Bigger_reordered_elems.ipelem')
-    #define_node_geometry('full_tree.ipnode')
-    #define_1d_elements('full_tree.ipelem')
+    define_node_geometry('full_tree_anast.ipnode')
+    anastomosis_elem = 34637
+    define_1d_elements('full_tree_anast.ipelem',anastomosis_elem)
+    #define_node_geometry('chorionic_tree_cycle3_v5.ipnode')
+    #define_1d_elements('chorionic_tree_cycle3_v5.ipelem')
     #define_node_geometry('new_nodes_v10.ipnode')
     #define_1d_elements('new_elems_v10.ipelem')
     #define_node_geometry('chor_nodes_cycle2_v7.ipnode')
@@ -44,7 +48,7 @@ def main():
     if mesh_type == 'full_plus_tube':
         add_venous_vessels = True
 
-    radius_from_file = False  #if False, the radius is based on vessel geometry
+    radius_from_file = True  #if False, the radius is based on vessel geometry
 
     #define terminal units (this subroutine always needs to be called regardless of mesh_type
     append_units()
@@ -54,18 +58,25 @@ def main():
 
         umbilical_elem_option = 'single_umbilical_vein' #replace 2 umbilical arteries with a single vein
         #umbilical_elem_option = 'same_as_arterial'
-        add_matching_mesh(umbilical_elem_option,'umbilical_elements.txt')
+        #umbilical_elements = [1,2,3,6,7] #bigger_umb_art
+        #umbilical_elements = [1, 2, 3, 4, 7, 8, 9, 10]  # bigger_anast
+        #umbilical_elements = [1, 2, 3, 4, 5] #average tree
+        #umbilical_elements = [1, 2, 3, 828, 829]  # patient 51
+        umbilical_elements = [1, 2, 3, 4, 34637, 34638, 34639, 34640]  # patient 51 anastomosis
+        #umbilical_elements = []
+        add_matching_mesh(umbilical_elem_option,umbilical_elements)
 
         if radius_from_file:
             #only arterial chorionic radii were calculated from images, radii for smaller vessels will be calculated
             order_system = 'strahler'
-            s_ratio = 1.54
-            define_rad_from_file('chorionic_vessel_radii_cycle2_v3.ipfiel', order_system, s_ratio)
+            s_ratio = 1.425
+            #define_rad_from_file('chorionic_element_radii_cycle3_v5.ipfiel', order_system, s_ratio)
+            define_rad_from_file('full_tree_anast_radii.ipfiel', order_system, s_ratio)
             #define_rad_from_file('bigger_umb_art.ipfiel', order_system, s_ratio)
 
             #defines radius by Strahler order in converging (venous mesh)
-            s_ratio_ven=1.55 #rate of decrease in radius at each order of the venous tree
-            inlet_rad_ven=5.0 #inlet radius
+            s_ratio_ven=1.51 #rate of decrease in radius at each order of the venous tree
+            inlet_rad_ven=4.0 #inlet radius
             order_system = 'strahler'
             order_options = 'venous'
             first_ven_no='' #number of elements read in plus one
@@ -75,16 +86,16 @@ def main():
         else:
 
             # define radius by Strahler order in diverging (arterial mesh)
-            s_ratio = 1.54  # rate of decrease in radius at each order of the arterial tree
-            inlet_rad = 3.0  # inlet radius
+            s_ratio = 1.38  # rate of decrease in radius at each order of the arterial tree  1.38
+            inlet_rad = 1.8  # inlet radius
             order_system = 'strahler'
             order_options = 'arterial'
             name = 'inlet'
             define_rad_from_geom(order_system, s_ratio, name, inlet_rad, order_options, '')
 
             #defines radius by STrahler order in converging (venous mesh)
-            s_ratio_ven=1.55 #rate of decrease in radius at each order of the venous tree
-            inlet_rad_ven=5.0 #inlet radius
+            s_ratio_ven= 1.46 #rate of decrease in radius at each order of the venous tree 1.46
+            inlet_rad_ven=4.0 #inlet radius
             order_system = 'strahler'
             order_options = 'venous'
             first_ven_no='' #number of elements read in plus one
@@ -99,13 +110,13 @@ def main():
 
         if radius_from_file:
             order_system = 'strahler'
-            s_ratio = 1.54
-            define_rad_from_file('chorionic_vessel_radii_cycle2_v3.ipfiel', order_system, s_ratio)
+            s_ratio = 1.53
+            define_rad_from_file('chorionic_element_radii_cycle3_v5.ipfiel', order_system, s_ratio)
             #define_rad_from_file('bigger_umb_art.ipfiel', order_system, s_ratio)
 
         else:
             # define radius by Strahler order
-            s_ratio = 1.54  # rate of decrease in radius at each order of the arterial tree
+            s_ratio = 1.53  # rate of decrease in radius at each order of the arterial tree
             inlet_rad = 3.0  # inlet radius
             order_system = 'strahler'
             order_options = 'all'
@@ -128,19 +139,23 @@ def main():
         #250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
 
     evaluate_prq(mesh_type,bc_type,inlet_flow,inlet_pressure,outlet_pressure)
- 
+
+    calculate_stats()
+
     ##export geometry
     group_name = 'perf_model'
     #export_1d_elem_geometry('Output/small.exelem', group_name)
     #export_node_geometry('Output/small.exnode', group_name)
     #export_1d_elem_geometry('Output/bigger.exelem', group_name)
     #export_node_geometry('Output/bigger.exnode', group_name)
-    export_1d_elem_geometry('Output/bigger_umb_art.exelem', group_name)
-    export_node_geometry('Output/bigger_umb_art.exnode', group_name)
-    #export_1d_elem_geometry('Output/bigger_venous.exelem', group_name)
-    #export_node_geometry('Output/bigger_venous.exnode', group_name)
-    #export_1d_elem_geometry('Output/full_tree.exelem', group_name)
-    #export_node_geometry('Output/full_tree.exnode', group_name)
+    #export_1d_elem_geometry('Output/bigger_umb_art.exelem', group_name)
+    #export_node_geometry('Output/bigger_umb_art.exnode', group_name)
+    #export_1d_elem_geometry('Output/bigger_anast.exelem', group_name)
+    #export_node_geometry('Output/bigger_anast.exnode', group_name)
+    export_1d_elem_geometry('Output/full_tree.exelem', group_name)
+    export_node_geometry('Output/full_tree.exnode', group_name)
+    #export_1d_elem_geometry('Output/chorionic_tree.exelem', group_name)
+    #export_node_geometry('Output/chorionic_tree.exnode', group_name)
     #export_1d_elem_geometry('Output/new_elems_v10.exelem', group_name)
     #export_node_geometry('Output/new_nodes_v10.exnode', group_name)
     #export_1d_elem_geometry('Output/chor_tree.exelem', group_name)
