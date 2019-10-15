@@ -1,531 +1,14 @@
-    #Read in geometry files
-    #define_node_geometry('Small.ipnode')
-    #define_1d_elements('Small.ipelem')
-    #define_node_geometry('Bigger.ipnode')
-    #define_1d_elements('Bigger.ipelem')
-    #define_node_geometry('bigger_umb_art.ipnode')
-    #define_1d_elements('bigger_umb_art.ipelem')
-    #define_1d_elements('Bigger_reordered_elems.ipelem')
-    # #define_node_geometry('full_tree_anast.ipnode')
-    # #anastomosis_elem = 34637
-    # #define_1d_elements('full_tree_anast.ipelem',anastomosis_elem)
-    #define_node_geometry('chorionic_tree_cycle3_v5.ipnode')
-    #define_1d_elements('chorionic_tree_cycle3_v5.ipelem')
-    #define_node_geometry('new_nodes_v10.ipnode')
-    #define_1d_elements('new_elems_v10.ipelem')
-    #define_node_geometry('chor_nodes_cycle2_v7.ipnode')
-    #define_1d_elements('chor_elems_cycle2_v6.ipelem')
-    #define_node_geometry('full_tree_patient_51.ipnode')
-    #define_1d_elements('full_tree_patient_51.ipelem')
-
-
-     #umbilical_elements = [1,2,3,6,7] #bigger_umb_art
-
-           #umbilical_elements = [1, 2, 3, 4, 5] #average tree
-        #umbilical_elements = [1, 2, 3, 828, 829]  # patient 51
-        #umbilical_elements = [1, 2, 3, 4, 34637, 34638, 34639, 34640]  # patient 51 anastomosis
-
-    #define_rad_from_file('bigger_umb_art.ipfiel', order_system, s_ratio)
-
-
-
-                 #defines radius by Strahler order in converging (venous mesh)
-            s_ratio_ven=1.51 #rate of decrease in radius at each order of the venous tree
-            umbilical_vein_radius=4.0
-            order_options = 'venous'
-            define_rad_from_geom(order_system, s_ratio_ven, '', umbilical_vein_radius, order_options,'')
-
-
-
-                       # define radius by Strahler order in diverging (arterial mesh)
-            s_ratio = 1.38  # rate of decrease in radius at each order of the arterial tree  1.38
-            inlet_rad = 1.8  # inlet radius
-            order_system = 'strahler'
-            order_options = 'arterial'
-            name = 'inlet'
-            define_rad_from_geom(order_system, s_ratio, name, inlet_rad, order_options, '')
-
-            #defines radius by STrahler order in converging (venous mesh)
-            s_ratio_ven= 1.46 #rate of decrease in radius at each order of the venous tree 1.46
-            inlet_rad_ven=4.0 #inlet radius
-            order_system = 'strahler'
-            order_options = 'venous'
-            first_ven_no='' #number of elements read in plus one
-            last_ven_no='' #2x the original number of elements + number of connections
-            define_rad_from_geom(order_system, s_ratio_ven, first_ven_no, inlet_rad_ven, order_options,last_ven_no)
-
-
-
-                    if radius_from_file:
-            order_system = 'strahler'
-            s_ratio = 1.53
-            define_rad_from_file('chorionic_element_radii_cycle3_v5.ipfiel', order_system, s_ratio)
-            #define_rad_from_file('bigger_umb_art.ipfiel', order_system, s_ratio)
-
-        else:
-            # define radius by Strahler order
-            s_ratio = 1.53  # rate of decrease in radius at each order of the arterial tree
-            inlet_rad = 3.0  # inlet radius
-            order_system = 'strahler'
-            order_options = 'all'
-            name = 'inlet'
-            define_rad_from_geom(order_system, s_ratio, name, inlet_rad, order_options, '')
-
-
-        #small tree: 111666.7 without capillary resistance !9branches plus venous;  win's tree
-
-
-           #export_1d_elem_geometry('Output/small.exelem', group_name)
-    #export_node_geometry('Output/small.exnode', group_name)
-    #export_1d_elem_geometry('Output/bigger.exelem', group_name)
-    #export_node_geometry('Output/bigger.exnode', group_name)
-    export_1d_elem_geometry('Output/bigger_umb_art.exelem', group_name)
-    export_node_geometry('Output/bigger_umb_art.exnode', group_name)
-    #export_1d_elem_geometry('Output/bigger_anast.exelem', group_name)
-    #export_node_geometry('Output/bigger_anast.exnode', group_name)
-    #export_1d_elem_geometry('Output/full_tree.exelem', group_name)
-    #export_node_geometry('Output/full_tree.exnode', group_name)
-    #export_1d_elem_geometry('Output/chorionic_tree.exelem', group_name)
-    #export_node_geometry('Output/chorionic_tree.exnode', group_name)
-    #export_1d_elem_geometry('Output/new_elems_v10.exelem', group_name)
-    #export_node_geometry('Output/new_nodes_v10.exnode', group_name)
-    #export_1d_elem_geometry('Output/chor_tree.exelem', group_name)
-    #export_node_geometry('Output/chor_tree.exnode', group_name)
-    #export_1d_elem_geometry('Output/patient_51.exelem', group_name)
-    #export_node_geometry('Output/patient_51.exnode', group_name)
-
-
-
-Bigger umb art:
+output_patient_49_het_27k_v2
 
     # parameters
-    export_directory = 'output_bigger'
+    export_directory = 'output_patient_49_het_27k_v2'
     # input and output file names
-    node_in_file = 'bigger_umb_art.ipnode'
-    elem_in_file = 'bigger_umb_art.ipelem'
-    elem_out_file = 'bigger_umb_art.exelem'
-    node_out_file = 'bigger_umb_art.exnode'
-    flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
-
-    two_inlets = False  # set to True if the arterial tree contains two umbilical inlet elements
-    anastomosis = False  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
-    if anastomosis:
-        anastomosis_elem = 7
-        override_anast_radius = True  # set this to True if you need to override the radius of the anastomosis
-        anastomosis_radius = 1
-        # mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
-        # arterial tree without any special features at the terminal level
-        # 'full_plus_tube' creates a matching venous mesh and connects arteries and
-        # veins with capillary units (capillaries are tubes represented by an element)
-    mesh_type = 'full_plus_tube'
-
-    if mesh_type == 'full_plus_tube':
-        add_venous_vessels = True
-
-    if add_venous_vessels:
-        # set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
-        # or 'same_as_arterial'
-        umbilical_elem_option = 'single_umbilical_vein'
-        umbilical_elements = [1,2,3,6,7]
-
-        num_convolutes = 6  # number of terminal convolute connections
-        num_generations = 3  # number of generations of symmetric intermediate villous trees
-
-    # parameters used to assign vessel radii
-
-    # radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
-    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
-    radius_from_file = False
-    if radius_from_file:
-        radius_in_file = 'inputs_patient_51/full_tree_anast_radii.ipfiel'
-    else:
-        umbilical_artery_radius = 1.8
-
-    order_system = 'strahler'
-    arterial_diameter_ratio = 1.425  # rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 4.0
-    venous_diameter_ratio = 1.51  # rate of decrease in radius at each order of the venous tree
-
-    # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
-    bc_type = 'pressure'  # 'pressure' or 'flow'
-    if bc_type == 'pressure':
-        inlet_pressure = 6650  # Pa (~50mmHg)
-        outlet_pressure = 2660  # Pa (~20mmHg)
-        inlet_flow = 0  # set to 0 for bc_type = pressure;
-
-    if bc_type == 'flow':
-        inlet_pressure = 0
-        outlet_pressure = 2660  # Pa (~20mmHg)
-        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
-        inlet_flow = 4166.7  # mm3/s #total flow for all umbilical arteries
-
-    # this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
-    # resolved in the images
-    # set to 0 if not using
-    image_voxel_size = 0.1165  # 0.1165 #mm
-
-
-
-bigger anastomosis:
-
-    #parameters
-    export_directory = 'output_bigger_anast'
-    #input and output file names
-    node_in_file = 'bigger_anast.ipnode'
-    elem_in_file = 'bigger_anast.ipelem'
-    elem_out_file = 'bigger_anast.exelem'
-    node_out_file = 'bigger_anast.exnode'
-    flow_gen_file = 'terminal flow per generation.csv' #blood flow by generation will be exported to this file
-
-    two_inlets = False #set to True if the arterial tree contains two umbilical inlet elements
-    anastomosis = True #set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
-    if anastomosis:
-        anastomosis_elem = 7
-        override_anast_radius = True #set this to True if you need to override the radius of the anastomosis
-        anastomosis_radius = 1
-    #mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
-                                  # arterial tree without any special features at the terminal level
-                                  # 'full_plus_tube' creates a matching venous mesh and connects arteries and
-                                  # veins with capillary units (capillaries are tubes represented by an element)
-    mesh_type = 'full_plus_tube'
-
-    if mesh_type == 'full_plus_tube':
-        add_venous_vessels = True
-
-    if add_venous_vessels:
-        #set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
-        # or 'same_as_arterial'
-        umbilical_elem_option = 'single_umbilical_vein'
-        umbilical_elements =  [1, 2, 3, 4, 7, 8, 9, 10]
-
-        num_convolutes = 6  # number of terminal convolute connections
-        num_generations = 3  # number of generations of symmetric intermediate villous trees
-
-    # parameters used to assign vessel radii
-
-    #radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
-    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
-    radius_from_file = False
-    if radius_from_file:
-        radius_in_file = 'inputs_patient_51/full_tree_anast_radii.ipfiel'
-    else:
-        umbilical_artery_radius = 1.8
-
-    order_system = 'strahler'
-    arterial_diameter_ratio = 1.425 #rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 4.0
-    venous_diameter_ratio = 1.51  #rate of decrease in radius at each order of the venous tree
-
-    #boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
-    bc_type = 'pressure' # 'pressure' or 'flow'
-    if  bc_type == 'pressure':
-        inlet_pressure = 6650 #Pa (~50mmHg)
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        inlet_flow = 0 #set to 0 for bc_type = pressure;
-
-    if  bc_type == 'flow':
-        inlet_pressure = 0
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
-        inlet_flow = 4166.7 # mm3/s #total flow for all umbilical arteries
-
-    #this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
-    #resolved in the images
-    # set to 0 if not using
-    image_voxel_size = 0.1165     #0.1165 #mm
-
-
-
-
-test anastomosis and two inlets bigger tree:
-
-    #parameters
-    export_directory = 'output_two_inlets_anast'
-    #input and output file names
-    node_in_file = 'two_inlets.ipnode'
-    elem_in_file = 'two_inlets_anast.ipelem'
-    elem_out_file = 'two_inlets.exelem'
-    node_out_file = 'two_inlets_anast.exnode'
-    flow_gen_file = 'terminal flow per generation.csv' #blood flow by generation will be exported to this file
-
-    two_inlets = True #set to True if the arterial tree contains two umbilical inlet elements
-    anastomosis = True #set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
-    if anastomosis:
-        anastomosis_elem = 13
-        override_anast_radius = True #set this to True if you need to override the radius of the anastomosis
-        anastomosis_radius = 1
-    #mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
-                                  # arterial tree without any special features at the terminal level
-                                  # 'full_plus_tube' creates a matching venous mesh and connects arteries and
-                                  # veins with capillary units (capillaries are tubes represented by an element)
-    mesh_type = 'full_plus_tube'
-
-    if mesh_type == 'full_plus_tube':
-        add_venous_vessels = True
-
-    if add_venous_vessels:
-        #set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
-        # or 'same_as_arterial'
-        umbilical_elem_option = 'single_umbilical_vein'
-        umbilical_elements = [1,2,5,6,13]
-
-        num_convolutes = 6  # number of terminal convolute connections
-        num_generations = 3  # number of generations of symmetric intermediate villous trees
-
-    # parameters used to assign vessel radii
-
-    #radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
-    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
-    radius_from_file = False
-    if radius_from_file:
-        radius_in_file = 'full_tree_anast_radii.ipfiel'
-    else:
-        umbilical_artery_radius = 1.3
-
-    order_system = 'strahler'
-    arterial_diameter_ratio = 1.38 #rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 2.7
-    venous_diameter_ratio = 1.46  #rate of decrease in radius at each order of the venous tree
-
-    #boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
-    bc_type = 'pressure' # 'pressure' or 'flow'
-    if  bc_type == 'pressure':
-        inlet_pressure = 6650 #Pa (~50mmHg)
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        inlet_flow = 0 #set to 0 for bc_type = pressure;
-
-    if  bc_type == 'flow':
-        inlet_pressure = 0
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
-        inlet_flow = 4166.7 # mm3/s #total flow for all umbilical arteries
-
-    #this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
-    #resolved in the images
-    # set to 0 if not using
-    image_voxel_size = 0.1165 #mm
-
-two inlets:
-
-    #parameters
-    export_directory = 'output_two_inlets'
-    #input and output file names
-    node_in_file = 'two_inlets.ipnode'
-    elem_in_file = 'two_inlets.ipelem'
-    elem_out_file = 'two_inlets.exelem'
-    node_out_file = 'two_inlets.exnode'
-    flow_gen_file = 'terminal flow per generation.csv' #blood flow by generation will be exported to this file
-
-    two_inlets = True #set to True if the arterial tree contains two umbilical inlet elements
-    anastomosis = False #set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
-    if anastomosis:
-        anastomosis_elem = 13
-        override_anast_radius = True #set this to True if you need to override the radius of the anastomosis
-        anastomosis_radius = 1
-    #mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
-                                  # arterial tree without any special features at the terminal level
-                                  # 'full_plus_tube' creates a matching venous mesh and connects arteries and
-                                  # veins with capillary units (capillaries are tubes represented by an element)
-    mesh_type = 'full_plus_tube'
-
-    if mesh_type == 'full_plus_tube':
-        add_venous_vessels = True
-
-    if add_venous_vessels:
-        #set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
-        # or 'same_as_arterial'
-        umbilical_elem_option = 'single_umbilical_vein'
-        umbilical_elements = [1,2,5,6]
-
-        num_convolutes = 6  # number of terminal convolute connections
-        num_generations = 3  # number of generations of symmetric intermediate villous trees
-
-    # parameters used to assign vessel radii
-
-    #radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
-    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
-    radius_from_file = False
-    if radius_from_file:
-        radius_in_file = 'full_tree_anast_radii.ipfiel'
-    else:
-        umbilical_artery_radius = 1.3
-
-    order_system = 'strahler'
-    arterial_diameter_ratio = 1.38 #rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 2.7
-    venous_diameter_ratio = 1.46  #rate of decrease in radius at each order of the venous tree
-
-    #boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
-    bc_type = 'pressure' # 'pressure' or 'flow'
-    if  bc_type == 'pressure':
-        inlet_pressure = 6650 #Pa (~50mmHg)
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        inlet_flow = 0 #set to 0 for bc_type = pressure;
-
-    if  bc_type == 'flow':
-        inlet_pressure = 0
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
-        inlet_flow = 4166.7 # mm3/s #total flow for all umbilical arteries
-
-    #this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
-    #resolved in the images
-    # set to 0 if not using
-    image_voxel_size = 0.1165 #mm
-
-
-
-
-
-patient 51 full tree no anastomosis:
-
-   #parameters
-    export_directory = 'output_patient_51'
-    #input and output file names
-    node_in_file = 'inputs_patient_51/full_tree_21.ipnode'
-    elem_in_file = 'inputs_patient_51/full_tree_21.ipelem'
-    elem_out_file = 'full_tree_21.exelem'
-    node_out_file = 'full_tree_21.exnode'
-    flow_gen_file = 'terminal flow per generation.csv' #blood flow by generation will be exported to this file
-
-    two_inlets = False #set to True if the arterial tree contains two umbilical inlet elements
-    anastomosis = False #set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
-    if anastomosis:
-        anastomosis_elem = 13
-        override_anast_radius = False #set this to True if you need to override the radius of the anastomosis
-        anastomosis_radius = 1
-    #mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
-                                  # arterial tree without any special features at the terminal level
-                                  # 'full_plus_tube' creates a matching venous mesh and connects arteries and
-                                  # veins with capillary units (capillaries are tubes represented by an element)
-    mesh_type = 'full_plus_tube'
-
-    if mesh_type == 'full_plus_tube':
-        add_venous_vessels = True
-
-    if add_venous_vessels:
-        #set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
-        # or 'same_as_arterial'
-        umbilical_elem_option = 'single_umbilical_vein'
-        umbilical_elements =  [1, 2, 3, 828, 829]
-
-        num_convolutes = 6  # number of terminal convolute connections
-        num_generations = 3  # number of generations of symmetric intermediate villous trees
-
-    # parameters used to assign vessel radii
-
-    #radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
-    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
-    radius_from_file = True
-    if radius_from_file:
-        radius_in_file = 'inputs_patient_51/chorionic_element_radii_cycle3_v5.ipfiel'
-    else:
-        umbilical_artery_radius = 1.8
-
-    order_system = 'strahler'
-    arterial_diameter_ratio = 1.425 #rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 4.0
-    venous_diameter_ratio = 1.51  #rate of decrease in radius at each order of the venous tree
-
-    #boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
-    bc_type = 'pressure' # 'pressure' or 'flow'
-    if  bc_type == 'pressure':
-        inlet_pressure = 6650 #Pa (~50mmHg)
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        inlet_flow = 0 #set to 0 for bc_type = pressure;
-
-    if  bc_type == 'flow':
-        inlet_pressure = 0
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
-        inlet_flow = 4166.7 # mm3/s #total flow for all umbilical arteries
-
-    #this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
-    #resolved in the images
-    # set to 0 if not using
-    image_voxel_size = 0.1165     #0.1165 #mm
-
-
-patient 51 full tree plus anastomosis:
-
-
-    #parameters
-    export_directory = 'output_patient_51_anast'
-    #input and output file names
-    node_in_file = 'inputs_patient_51/full_tree_anast.ipnode'
-    elem_in_file = 'inputs_patient_51/full_tree_anast.ipelem'
-    elem_out_file = 'full_tree_anast.exelem'
-    node_out_file = 'full_tree_anast.exnode'
-    flow_gen_file = 'terminal flow per generation.csv' #blood flow by generation will be exported to this file
-
-    two_inlets = False #set to True if the arterial tree contains two umbilical inlet elements
-    anastomosis = True #set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
-    if anastomosis:
-        anastomosis_elem = 34637
-        override_anast_radius = False #set this to True if you need to override the radius of the anastomosis
-        anastomosis_radius = 1
-    #mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
-                                  # arterial tree without any special features at the terminal level
-                                  # 'full_plus_tube' creates a matching venous mesh and connects arteries and
-                                  # veins with capillary units (capillaries are tubes represented by an element)
-    mesh_type = 'full_plus_tube'
-
-    if mesh_type == 'full_plus_tube':
-        add_venous_vessels = True
-
-    if add_venous_vessels:
-        #set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
-        # or 'same_as_arterial'
-        umbilical_elem_option = 'single_umbilical_vein'
-        umbilical_elements =  [1, 2, 3, 4, 34637, 34638, 34639, 34640]
-
-        num_convolutes = 6  # number of terminal convolute connections
-        num_generations = 3  # number of generations of symmetric intermediate villous trees
-
-    # parameters used to assign vessel radii
-
-    #radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
-    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
-    radius_from_file = True
-    if radius_from_file:
-        radius_in_file = 'inputs_patient_51/full_tree_anast_radii.ipfiel'
-    else:
-        umbilical_artery_radius = 1.8
-
-    order_system = 'strahler'
-    arterial_diameter_ratio = 1.425 #rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 4.0
-    venous_diameter_ratio = 1.51  #rate of decrease in radius at each order of the venous tree
-
-    #boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
-    bc_type = 'pressure' # 'pressure' or 'flow'
-    if  bc_type == 'pressure':
-        inlet_pressure = 6650 #Pa (~50mmHg)
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        inlet_flow = 0 #set to 0 for bc_type = pressure;
-
-    if  bc_type == 'flow':
-        inlet_pressure = 0
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
-        inlet_flow = 4166.7 # mm3/s #total flow for all umbilical arteries
-
-    #this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
-    #resolved in the images
-    # set to 0 if not using
-    image_voxel_size = 0.1165     #0.1165 #mm
-
-
-patient 49 heterogeneous no anast
-
-    # parameters
-    export_directory = 'output_patient_49_het'
-    # input and output file names
-    node_in_file = 'inputs_patient_49/het_5_10_15/full_tree.ipnode'
-    elem_in_file = 'inputs_patient_49/het_5_10_15/full_tree.ipelem'
+    node_in_file = 'inputs_patient_49/het_27k_v2/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_49/het_27k_v2/full_tree.ipelem'
     elem_out_file = 'full_tree.exelem'
     node_out_file = 'full_tree.exnode'
     flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
 
     two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
     anastomosis = False  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
@@ -557,14 +40,16 @@ patient 49 heterogeneous no anast
     # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
     radius_from_file = True
     if radius_from_file:
-        radius_in_file = 'inputs_patient_49/p49_large_vessel_radius_step17.ipfiel'
+        radius_in_file = 'inputs_patient_49/p49_large_vessel_radius_v3.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+                      #venous radii
     else:
         umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
 
     order_system = 'strahler'
-    arterial_diameter_ratio = 1.425  # rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 4.0
-    venous_diameter_ratio = 1.51  # rate of decrease in radius at each order of the venous tree
+    arterial_diameter_ratio = 1.43  # rate of decrease in radius at each order of the arterial tree
 
     # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
     bc_type = 'pressure'  # 'pressure' or 'flow'
@@ -585,16 +70,18 @@ patient 49 heterogeneous no anast
     image_voxel_size = 0.1165  # 0.1165 #mm
 
 
-patient 49 uniform (around 60,000 elems) no anast
 
+
+output_patient_49_uniform_28k_v2
     # parameters
-    export_directory = 'output_patient_49_uniform'
+    export_directory = 'output_patient_49_uniform_28k_v2'
     # input and output file names
-    node_in_file = 'inputs_patient_49/uniform/full_tree.ipnode'
-    elem_in_file = 'inputs_patient_49/uniform/full_tree.ipelem'
+    node_in_file = 'inputs_patient_49/uniform_28k_v2/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_49/uniform_28k_v2/full_tree.ipelem'
     elem_out_file = 'full_tree.exelem'
     node_out_file = 'full_tree.exnode'
     flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv' #arterial and venous radii will be exported to this file
 
     two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
     anastomosis = False  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
@@ -626,14 +113,16 @@ patient 49 uniform (around 60,000 elems) no anast
     # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
     radius_from_file = True
     if radius_from_file:
-        radius_in_file = 'inputs_patient_49/p49_large_vessel_radius_step17_v2.ipfiel'
+        radius_in_file = 'inputs_patient_49/p49_large_vessel_radius_v3.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+                      #venous radii
     else:
         umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
 
     order_system = 'strahler'
-    arterial_diameter_ratio = 1.425  # rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 4.0
-    venous_diameter_ratio = 1.51  # rate of decrease in radius at each order of the venous tree
+    arterial_diameter_ratio = 1.43  # rate of decrease in radius at each order of the arterial tree
 
     # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
     bc_type = 'pressure'  # 'pressure' or 'flow'
@@ -654,16 +143,18 @@ patient 49 uniform (around 60,000 elems) no anast
     image_voxel_size = 0.1165  # 0.1165 #mm
 
 
-patient 49 uniform no anast (around 70,000 elems)
 
-    # parameters
-    export_directory = 'output_patient_49_uniform_more_points'
+output_patient_49_het_34k_v2
+
+        # parameters
+    export_directory = 'output_patient_49_het_34k_v2'
     # input and output file names
-    node_in_file = 'inputs_patient_49/uniform_more_points/full_tree.ipnode'
-    elem_in_file = 'inputs_patient_49/uniform_more_points/full_tree.ipelem'
+    node_in_file = 'inputs_patient_49/het_34k_v2/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_49/het_34k_v2/full_tree.ipelem'
     elem_out_file = 'full_tree.exelem'
     node_out_file = 'full_tree.exnode'
     flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
 
     two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
     anastomosis = False  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
@@ -695,14 +186,16 @@ patient 49 uniform no anast (around 70,000 elems)
     # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
     radius_from_file = True
     if radius_from_file:
-        radius_in_file = 'inputs_patient_49/p49_large_vessel_radius_step17_v2.ipfiel'
+        radius_in_file = 'inputs_patient_49/p49_large_vessel_radius_v3.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+        # venous radii
     else:
         umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
 
     order_system = 'strahler'
-    arterial_diameter_ratio = 1.425  # rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 4.0
-    venous_diameter_ratio = 1.51  # rate of decrease in radius at each order of the venous tree
+    arterial_diameter_ratio = 1.43  # rate of decrease in radius at each order of the arterial tree
 
     # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
     bc_type = 'pressure'  # 'pressure' or 'flow'
@@ -723,16 +216,18 @@ patient 49 uniform no anast (around 70,000 elems)
     image_voxel_size = 0.1165  # 0.1165 #mm
 
 
-patient 49 uniform 28k no anast
+
+output_patient_49_uniform_36k_v2
 
     # parameters
-    export_directory = 'output_patient_49_uniform_28k'
+    export_directory = 'output_patient_49_uniform_36k_v2'
     # input and output file names
-    node_in_file = 'inputs_patient_49/uniform_28k/full_tree.ipnode'
-    elem_in_file = 'inputs_patient_49/uniform_28k/full_tree.ipelem'
+    node_in_file = 'inputs_patient_49/uniform_36k_v2/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_49/uniform_36k_v2/full_tree.ipelem'
     elem_out_file = 'full_tree.exelem'
     node_out_file = 'full_tree.exnode'
     flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv' #arterial and venous radii will be exported to this file
 
     two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
     anastomosis = False  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
@@ -764,14 +259,16 @@ patient 49 uniform 28k no anast
     # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
     radius_from_file = True
     if radius_from_file:
-        radius_in_file = 'inputs_patient_49/p49_large_vessel_radius_step17_v2.ipfiel'
+        radius_in_file = 'inputs_patient_49/p49_large_vessel_radius_v3.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+                      #venous radii
     else:
         umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
 
     order_system = 'strahler'
-    arterial_diameter_ratio = 2.3  # rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 4.0
-    venous_diameter_ratio = 1.69 #1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
+    arterial_diameter_ratio = 1.43  # rate of decrease in radius at each order of the arterial tree
 
     # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
     bc_type = 'pressure'  # 'pressure' or 'flow'
@@ -792,36 +289,107 @@ patient 49 uniform 28k no anast
     image_voxel_size = 0.1165  # 0.1165 #mm
 
 
+output_patient_49_het_47k_v2
 
-patient 51 two inlets no anast
+    # parameters
+    export_directory = 'output_patient_49_het_47k_v2'
+    # input and output file names
+    node_in_file = 'inputs_patient_49/het_47k_v2/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_49/het_47k_v2/full_tree.ipelem'
+    elem_out_file = 'full_tree.exelem'
+    node_out_file = 'full_tree.exnode'
+    flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
+
+    two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
+    anastomosis = False  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
+    if anastomosis:
+        anastomosis_elem = 13
+        override_anast_radius = False  # set this to True if you need to override the radius of the anastomosis
+        anastomosis_radius = 1
+        # mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
+        # arterial tree without any special features at the terminal level
+        # 'full_plus_tube' creates a matching venous mesh and connects arteries and
+        # veins with capillary units (capillaries are tubes represented by an element)
+    mesh_type = 'full_plus_tube'
+
+    if mesh_type == 'full_plus_tube':
+        add_venous_vessels = True
+
+    if add_venous_vessels:
+        # set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
+        # or 'same_as_arterial'
+        umbilical_elem_option = 'single_umbilical_vein'
+        umbilical_elements = [1, 2, 2201, 2202]
+
+        num_convolutes = 6  # number of terminal convolute connections
+        num_generations = 3  # number of generations of symmetric intermediate villous trees
+
+    # parameters used to assign vessel radii
+
+    # radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
+    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
+    radius_from_file = True
+    if radius_from_file:
+        radius_in_file = 'inputs_patient_49/p49_large_vessel_radius_v3.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+        # venous radii
+    else:
+        umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
+
+    order_system = 'strahler'
+    arterial_diameter_ratio = 1.43  # rate of decrease in radius at each order of the arterial tree
+
+    # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
+    bc_type = 'pressure'  # 'pressure' or 'flow'
+    if bc_type == 'pressure':
+        inlet_pressure = 6650  # Pa (~50mmHg)
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        inlet_flow = 0  # set to 0 for bc_type = pressure;
+
+    if bc_type == 'flow':
+        inlet_pressure = 0
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
+        inlet_flow = 4166.7  # mm3/s #total flow for all umbilical arteries
+
+    # this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
+    # resolved in the images
+    # set to 0 if not using
+    image_voxel_size = 0.1165  # 0.1165 #mm
 
 
-    #parameters
+output_patient_51_two_inlets
+
+    # parameters
     export_directory = 'output_patient_51_two_inlets'
-    #input and output file names
+    # input and output file names
     node_in_file = 'inputs_patient_51/two_inlets_no_anast/full_tree.ipnode'
     elem_in_file = 'inputs_patient_51/two_inlets_no_anast/full_tree.ipelem'
     elem_out_file = 'full_tree.exelem'
     node_out_file = 'full_tree.exnode'
-    flow_gen_file = 'terminal flow per generation.csv' #blood flow by generation will be exported to this file
+    flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
 
-    two_inlets = True #set to True if the arterial tree contains two umbilical inlet elements
-    anastomosis = False #set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
+    two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
+    anastomosis = False  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
     if anastomosis:
-        anastomosis_elem = 34637
-        override_anast_radius = False #set this to True if you need to override the radius of the anastomosis
+        anastomosis_elem = 13
+        override_anast_radius = False  # set this to True if you need to override the radius of the anastomosis
         anastomosis_radius = 1
-    #mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
-                                  # arterial tree without any special features at the terminal level
-                                  # 'full_plus_tube' creates a matching venous mesh and connects arteries and
-                                  # veins with capillary units (capillaries are tubes represented by an element)
+        # mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
+        # arterial tree without any special features at the terminal level
+        # 'full_plus_tube' creates a matching venous mesh and connects arteries and
+        # veins with capillary units (capillaries are tubes represented by an element)
     mesh_type = 'full_plus_tube'
 
     if mesh_type == 'full_plus_tube':
         add_venous_vessels = True
 
     if add_venous_vessels:
-        #set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
+        # set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
         # or 'same_as_arterial'
         umbilical_elem_option = 'single_umbilical_vein'
         umbilical_elements = [1, 2, 827, 828]
@@ -831,33 +399,547 @@ patient 51 two inlets no anast
 
     # parameters used to assign vessel radii
 
-    #radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
+    # radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
     # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
     radius_from_file = True
     if radius_from_file:
         radius_in_file = 'inputs_patient_51/two_inlets_no_anast/chorionic_element_radii_cycle3_v5_two_inlets.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+        # venous radii
     else:
         umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
 
     order_system = 'strahler'
-    arterial_diameter_ratio = 1.425 #rate of decrease in radius at each order of the arterial tree
-    umbilical_vein_radius = 4.0
-    venous_diameter_ratio = 1.51  #rate of decrease in radius at each order of the venous tree
+    arterial_diameter_ratio = 1.425  # rate of decrease in radius at each order of the arterial tree
 
-    #boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
-    bc_type = 'pressure' # 'pressure' or 'flow'
-    if  bc_type == 'pressure':
-        inlet_pressure = 6650 #Pa (~50mmHg)
-        outlet_pressure = 2660 #Pa (~20mmHg)
-        inlet_flow = 0 #set to 0 for bc_type = pressure;
+    # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
+    bc_type = 'pressure'  # 'pressure' or 'flow'
+    if bc_type == 'pressure':
+        inlet_pressure = 6650  # Pa (~50mmHg)
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        inlet_flow = 0  # set to 0 for bc_type = pressure;
 
-    if  bc_type == 'flow':
+    if bc_type == 'flow':
         inlet_pressure = 0
-        outlet_pressure = 2660 #Pa (~20mmHg)
+        outlet_pressure = 2660  # Pa (~20mmHg)
         # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
-        inlet_flow = 4166.7 # mm3/s #total flow for all umbilical arteries
+        inlet_flow = 4166.7  # mm3/s #total flow for all umbilical arteries
 
-    #this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
-    #resolved in the images
+    # this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
+    # resolved in the images
     # set to 0 if not using
-    image_voxel_size = 0.1165     #0.1165 #mm
+    image_voxel_size = 0.1165  # 0.1165 #mm
+
+
+output_patient_51_two_inlets_anast
+
+    # parameters
+    export_directory = 'output_patient_51_two_inlets_anast'
+    # input and output file names
+    node_in_file = 'inputs_patient_51/two_inlets_anast/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_51/two_inlets_anast/full_tree.ipelem'
+    elem_out_file = 'full_tree.exelem'
+    node_out_file = 'full_tree.exnode'
+    flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
+
+    two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
+    anastomosis = True  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
+    if anastomosis:
+        anastomosis_elem = 34636
+        override_anast_radius = False  # set this to True if you need to override the radius of the anastomosis
+        anastomosis_radius = 1
+        # mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
+        # arterial tree without any special features at the terminal level
+        # 'full_plus_tube' creates a matching venous mesh and connects arteries and
+        # veins with capillary units (capillaries are tubes represented by an element)
+    mesh_type = 'full_plus_tube'
+
+    if mesh_type == 'full_plus_tube':
+        add_venous_vessels = True
+
+    if add_venous_vessels:
+        # set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
+        # or 'same_as_arterial'
+        umbilical_elem_option = 'single_umbilical_vein'
+        umbilical_elements = [1, 2, 3, 34636, 34637, 34638, 34639]
+
+        num_convolutes = 6  # number of terminal convolute connections
+        num_generations = 3  # number of generations of symmetric intermediate villous trees
+
+    # parameters used to assign vessel radii
+
+    # radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
+    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
+    radius_from_file = True
+    if radius_from_file:
+        radius_in_file = 'inputs_patient_51/two_inlets_anast/full_tree_radius_anast.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+        # venous radii
+    else:
+        umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
+
+    order_system = 'strahler'
+    arterial_diameter_ratio = 1.425  # rate of decrease in radius at each order of the arterial tree
+
+    # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
+    bc_type = 'pressure'  # 'pressure' or 'flow'
+    if bc_type == 'pressure':
+        inlet_pressure = 6650  # Pa (~50mmHg)
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        inlet_flow = 0  # set to 0 for bc_type = pressure;
+
+    if bc_type == 'flow':
+        inlet_pressure = 0
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
+        inlet_flow = 4166.7  # mm3/s #total flow for all umbilical arteries
+
+    # this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
+    # resolved in the images
+    # set to 0 if not using
+    image_voxel_size = 0.1165  # 0.1165 #mm
+
+
+
+output_patient_49_het_34k_v2_anast
+
+   # parameters
+    export_directory = 'output_patient_49_het_34k_v2_anast'
+    # input and output file names
+    node_in_file = 'inputs_patient_49/het_34k_v2_anast/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_49/het_34k_v2_anast/full_tree.ipelem'
+    elem_out_file = 'full_tree.exelem'
+    node_out_file = 'full_tree.exnode'
+    flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
+
+    two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
+    anastomosis = True  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
+    if anastomosis:
+        anastomosis_elem = 2202
+        override_anast_radius = False  # set this to True if you need to override the radius of the anastomosis
+        anastomosis_radius = 1
+        # mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
+        # arterial tree without any special features at the terminal level
+        # 'full_plus_tube' creates a matching venous mesh and connects arteries and
+        # veins with capillary units (capillaries are tubes represented by an element)
+    mesh_type = 'full_plus_tube'
+
+    if mesh_type == 'full_plus_tube':
+        add_venous_vessels = True
+
+    if add_venous_vessels:
+        # set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
+        # or 'same_as_arterial'
+        umbilical_elem_option = 'single_umbilical_vein'
+        umbilical_elements = [1, 2, 3, 2202, 2203, 2204, 2205]
+
+        num_convolutes = 6  # number of terminal convolute connections
+        num_generations = 3  # number of generations of symmetric intermediate villous trees
+
+    # parameters used to assign vessel radii
+
+    # radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
+    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
+    radius_from_file = True
+    if radius_from_file:
+        radius_in_file = 'inputs_patient_49/het_34k_v2_anast/p49_large_vessel_radius_v3_anast.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+        # venous radii
+    else:
+        umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
+
+    order_system = 'strahler'
+    arterial_diameter_ratio = 1.43  # rate of decrease in radius at each order of the arterial tree
+
+    # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
+    bc_type = 'pressure'  # 'pressure' or 'flow'
+    if bc_type == 'pressure':
+        inlet_pressure = 6650  # Pa (~50mmHg)
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        inlet_flow = 0  # set to 0 for bc_type = pressure;
+
+    if bc_type == 'flow':
+        inlet_pressure = 0
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
+        inlet_flow = 4166.7  # mm3/s #total flow for all umbilical arteries
+
+    # this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
+    # resolved in the images
+    # set to 0 if not using
+    image_voxel_size = 0.1165  # 0.1165 #mm
+
+
+
+
+output_patient_49_het_34k_v2_anast_flow
+
+    # parameters
+    export_directory = 'output_patient_49_het_34k_v2_anast_flow'
+    # input and output file names
+    node_in_file = 'inputs_patient_49/het_34k_v2_anast/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_49/het_34k_v2_anast/full_tree.ipelem'
+    elem_out_file = 'full_tree.exelem'
+    node_out_file = 'full_tree.exnode'
+    flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
+
+    two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
+    anastomosis = True  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
+    if anastomosis:
+        anastomosis_elem = 2202
+        override_anast_radius = False  # set this to True if you need to override the radius of the anastomosis
+        anastomosis_radius = 1
+        # mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
+        # arterial tree without any special features at the terminal level
+        # 'full_plus_tube' creates a matching venous mesh and connects arteries and
+        # veins with capillary units (capillaries are tubes represented by an element)
+    mesh_type = 'full_plus_tube'
+
+    if mesh_type == 'full_plus_tube':
+        add_venous_vessels = True
+
+    if add_venous_vessels:
+        # set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
+        # or 'same_as_arterial'
+        umbilical_elem_option = 'single_umbilical_vein'
+        umbilical_elements = [1, 2, 3, 2202, 2203, 2204, 2205]
+
+        num_convolutes = 6  # number of terminal convolute connections
+        num_generations = 3  # number of generations of symmetric intermediate villous trees
+
+    # parameters used to assign vessel radii
+
+    # radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
+    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
+    radius_from_file = True
+    if radius_from_file:
+        radius_in_file = 'inputs_patient_49/het_34k_v2_anast/p49_large_vessel_radius_v3_anast.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+        # venous radii
+    else:
+        umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
+
+    order_system = 'strahler'
+    arterial_diameter_ratio = 1.43  # rate of decrease in radius at each order of the arterial tree
+
+    # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
+    bc_type = 'flow'  # 'pressure' or 'flow'
+    if bc_type == 'pressure':
+        inlet_pressure = 6650  # Pa (~50mmHg)
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        inlet_flow = 0  # set to 0 for bc_type = pressure;
+
+    if bc_type == 'flow':
+        inlet_pressure = 0
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
+        inlet_flow = 4622  # mm3/s #total flow for all umbilical arteries
+
+    # this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
+    # resolved in the images
+    # set to 0 if not using
+    image_voxel_size = 0.1165  # 0.1165 #mm
+
+
+output_patient_49_het_34k_v2_flow
+
+    # parameters
+    export_directory = 'output_patient_49_het_34k_v2_flow'
+    # input and output file names
+    node_in_file = 'inputs_patient_49/het_34k_v2/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_49/het_34k_v2/full_tree.ipelem'
+    elem_out_file = 'full_tree.exelem'
+    node_out_file = 'full_tree.exnode'
+    flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
+
+    two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
+    anastomosis = False  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
+    if anastomosis:
+        anastomosis_elem = 13
+        override_anast_radius = False  # set this to True if you need to override the radius of the anastomosis
+        anastomosis_radius = 1
+        # mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
+        # arterial tree without any special features at the terminal level
+        # 'full_plus_tube' creates a matching venous mesh and connects arteries and
+        # veins with capillary units (capillaries are tubes represented by an element)
+    mesh_type = 'full_plus_tube'
+
+    if mesh_type == 'full_plus_tube':
+        add_venous_vessels = True
+
+    if add_venous_vessels:
+        # set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
+        # or 'same_as_arterial'
+        umbilical_elem_option = 'single_umbilical_vein'
+        umbilical_elements = [1, 2, 2201, 2202]
+
+        num_convolutes = 6  # number of terminal convolute connections
+        num_generations = 3  # number of generations of symmetric intermediate villous trees
+
+    # parameters used to assign vessel radii
+
+    # radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
+    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
+    radius_from_file = True
+    if radius_from_file:
+        radius_in_file = 'inputs_patient_49/p49_large_vessel_radius_v3.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+        # venous radii
+    else:
+        umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
+
+    order_system = 'strahler'
+    arterial_diameter_ratio = 1.43  # rate of decrease in radius at each order of the arterial tree
+
+    # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
+    bc_type = 'flow'  # 'pressure' or 'flow'
+    if bc_type == 'pressure':
+        inlet_pressure = 6650  # Pa (~50mmHg)
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        inlet_flow = 0  # set to 0 for bc_type = pressure;
+
+    if bc_type == 'flow':
+        inlet_pressure = 0
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
+        inlet_flow = 4615.46  # mm3/s #total flow for all umbilical arteries
+
+    # this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
+    # resolved in the images
+    # set to 0 if not using
+    image_voxel_size = 0.1165  # 0.1165 #mm
+
+
+output_patient_51_two_inlets_anast_flow
+
+    # parameters
+    export_directory = 'output_patient_51_two_inlets_anast_flow'
+    # input and output file names
+    node_in_file = 'inputs_patient_51/two_inlets_anast/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_51/two_inlets_anast/full_tree.ipelem'
+    elem_out_file = 'full_tree.exelem'
+    node_out_file = 'full_tree.exnode'
+    flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
+
+    two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
+    anastomosis = True  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
+    if anastomosis:
+        anastomosis_elem = 34636
+        override_anast_radius = False  # set this to True if you need to override the radius of the anastomosis
+        anastomosis_radius = 1
+        # mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
+        # arterial tree without any special features at the terminal level
+        # 'full_plus_tube' creates a matching venous mesh and connects arteries and
+        # veins with capillary units (capillaries are tubes represented by an element)
+    mesh_type = 'full_plus_tube'
+
+    if mesh_type == 'full_plus_tube':
+        add_venous_vessels = True
+
+    if add_venous_vessels:
+        # set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
+        # or 'same_as_arterial'
+        umbilical_elem_option = 'single_umbilical_vein'
+        umbilical_elements = [1, 2, 3, 34636, 34637, 34638, 34639]
+
+        num_convolutes = 6  # number of terminal convolute connections
+        num_generations = 3  # number of generations of symmetric intermediate villous trees
+
+    # parameters used to assign vessel radii
+
+    # radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
+    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
+    radius_from_file = True
+    if radius_from_file:
+        radius_in_file = 'inputs_patient_51/two_inlets_anast/full_tree_radius_anast.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+        # venous radii
+    else:
+        umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
+
+    order_system = 'strahler'
+    arterial_diameter_ratio = 1.425  # rate of decrease in radius at each order of the arterial tree
+
+    # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
+    bc_type = 'flow'  # 'pressure' or 'flow'
+    if bc_type == 'pressure':
+        inlet_pressure = 6650  # Pa (~50mmHg)
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        inlet_flow = 0  # set to 0 for bc_type = pressure;
+
+    if bc_type == 'flow':
+        inlet_pressure = 0
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
+        inlet_flow = 4899.76  # mm3/s #total flow for all umbilical arteries
+
+    # this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
+    # resolved in the images
+    # set to 0 if not using
+    image_voxel_size = 0.1165  # 0.1165 #mm
+
+
+output_patient_51_two_inlets_flow
+
+    # parameters
+    export_directory = 'output_patient_51_two_inlets_flow'
+    # input and output file names
+    node_in_file = 'inputs_patient_51/two_inlets_no_anast/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_51/two_inlets_no_anast/full_tree.ipelem'
+    elem_out_file = 'full_tree.exelem'
+    node_out_file = 'full_tree.exnode'
+    flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
+
+    two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
+    anastomosis = False  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
+    if anastomosis:
+        anastomosis_elem = 13
+        override_anast_radius = False  # set this to True if you need to override the radius of the anastomosis
+        anastomosis_radius = 1
+        # mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
+        # arterial tree without any special features at the terminal level
+        # 'full_plus_tube' creates a matching venous mesh and connects arteries and
+        # veins with capillary units (capillaries are tubes represented by an element)
+    mesh_type = 'full_plus_tube'
+
+    if mesh_type == 'full_plus_tube':
+        add_venous_vessels = True
+
+    if add_venous_vessels:
+        # set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
+        # or 'same_as_arterial'
+        umbilical_elem_option = 'single_umbilical_vein'
+        umbilical_elements = [1, 2, 827, 828]
+
+        num_convolutes = 6  # number of terminal convolute connections
+        num_generations = 3  # number of generations of symmetric intermediate villous trees
+
+    # parameters used to assign vessel radii
+
+    # radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
+    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
+    radius_from_file = True
+    if radius_from_file:
+        radius_in_file = 'inputs_patient_51/two_inlets_no_anast/chorionic_element_radii_cycle3_v5_two_inlets.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+        # venous radii
+    else:
+        umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
+
+    order_system = 'strahler'
+    arterial_diameter_ratio = 1.425  # rate of decrease in radius at each order of the arterial tree
+
+    # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
+    bc_type = 'flow'  # 'pressure' or 'flow'
+    if bc_type == 'pressure':
+        inlet_pressure = 6650  # Pa (~50mmHg)
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        inlet_flow = 0  # set to 0 for bc_type = pressure;
+
+    if bc_type == 'flow':
+        inlet_pressure = 0
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
+        inlet_flow = 5484.54  # mm3/s #total flow for all umbilical arteries
+
+    # this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
+    # resolved in the images
+    # set to 0 if not using
+    image_voxel_size = 0.1165  # 0.1165 #mm
+
+
+
+output_patient_51_two_inlets_uniform
+
+    # parameters
+    export_directory = 'output_patient_51_two_inlets_uniform'
+    # input and output file names
+    node_in_file = 'inputs_patient_51/uniform_two_inlets/full_tree.ipnode'
+    elem_in_file = 'inputs_patient_51/uniform_two_inlets/full_tree.ipelem'
+    elem_out_file = 'full_tree.exelem'
+    node_out_file = 'full_tree.exnode'
+    flow_gen_file = 'terminal flow per generation.csv'  # blood flow by generation will be exported to this file
+    venous_radii_file = 'arterial_and_venous_radii.csv'
+
+    two_inlets = True  # set to True if the arterial tree contains two umbilical inlet elements
+    anastomosis = False  # set to True if Hyrt's anastomosis between the umbilical arteries exists in the input arterial tree
+    if anastomosis:
+        anastomosis_elem = 13
+        override_anast_radius = False  # set this to True if you need to override the radius of the anastomosis
+        anastomosis_radius = 1
+        # mesh_type = 'simple_tree' #'full_plus_tube'  # mesh_type: can be 'simple_tree' or 'full_plus_tube'. Simple_tree is the input
+        # arterial tree without any special features at the terminal level
+        # 'full_plus_tube' creates a matching venous mesh and connects arteries and
+        # veins with capillary units (capillaries are tubes represented by an element)
+    mesh_type = 'full_plus_tube'
+
+    if mesh_type == 'full_plus_tube':
+        add_venous_vessels = True
+
+    if add_venous_vessels:
+        # set umbilical_elem_option to either 'single_umbilical_vein' (replace 2 umbilical arteries with a single vein)
+        # or 'same_as_arterial'
+        umbilical_elem_option = 'single_umbilical_vein'
+        umbilical_elements = [1, 2, 827, 828]
+
+        num_convolutes = 6  # number of terminal convolute connections
+        num_generations = 3  # number of generations of symmetric intermediate villous trees
+
+    # parameters used to assign vessel radii
+
+    # radius_from_file = True  #if False, vessel radii are based on vessel geometry, ordering system and diameter ratio
+    # if True available arterial vessel radii are read in, while the remaining arterial vessel radii are calculated
+    radius_from_file = True
+    if radius_from_file:
+        radius_in_file = 'inputs_patient_51/uniform_two_inlets/chorionic_element_radii_cycle3_v5_two_inlets.ipfiel'
+        factor = 2.0  # default is 2; factor by which arterial radii will  be multiplied to assign the corresponding
+        # venous radii
+    else:
+        umbilical_artery_radius = 1.8
+        umbilical_vein_radius = 4.0
+        venous_diameter_ratio = 1.59  # 1.56 and arterial 2.3 450ml/min  # rate of decrease in radius at each order of the venous tree
+
+    order_system = 'strahler'
+    arterial_diameter_ratio = 1.48  # rate of decrease in radius at each order of the arterial tree
+
+    # boundary conditions: pressure at the outlet (umbilical vein) and pressure or volumetric blood flow at the inlet(s)
+    bc_type = 'pressure'  # 'pressure' or 'flow'
+    if bc_type == 'pressure':
+        inlet_pressure = 6650  # Pa (~50mmHg)
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        inlet_flow = 0  # set to 0 for bc_type = pressure;
+
+    if bc_type == 'flow':
+        inlet_pressure = 0
+        outlet_pressure = 2660  # Pa (~20mmHg)
+        # 250 ml/min (21% of the fetal cardiac output) 0.06 ml/min = 1 mm3/s
+        inlet_flow = 4166.7  # mm3/s #total flow for all umbilical arteries
+
+    # this parameter is used to calculate the volume of vessels in the reconstructed tree that can't be
+    # resolved in the images
+    # set to 0 if not using
+    image_voxel_size = 0.1165  # 0.1165 #mm
+
+
+
+

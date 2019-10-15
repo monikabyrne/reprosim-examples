@@ -1,0 +1,201 @@
+Blood flow simulation parameters:
+add_venous_vessels = True
+anastomosis = False
+arterial_diameter_ratio = 1.43
+bc_type = pressure
+elem_in_file = inputs_patient_49/uniform_36k_v2/full_tree.ipelem
+elem_out_file = full_tree.exelem
+export_directory = output_patient_49_uniform_36k_v2
+factor = 2.0
+flow_gen_file = terminal flow per generation.csv
+image_voxel_size = 0.1165
+inlet_flow = 0
+inlet_pressure = 6650
+mesh_type = full_plus_tube
+node_in_file = inputs_patient_49/uniform_36k_v2/full_tree.ipnode
+node_out_file = full_tree.exnode
+num_convolutes = 6
+num_generations = 3
+order_system = strahler
+outlet_pressure = 2660
+radius_from_file = True
+radius_in_file = inputs_patient_49/p49_large_vessel_radius_v3.ipfiel
+script_start_time = 0.026184
+two_inlets = True
+umbilical_elem_option = single_umbilical_vein
+umbilical_elements = [1, 2, 2201, 2202]
+venous_radii_file = arterial_and_venous_radii.csv
+ Entering subroutine perfusion_indices                                           
+ Exiting subroutine perfusion_indices                                           
+ Entering subroutine define_node_geometry                                        
+ Exiting subroutine define_node_geometry                                        
+ Entering subroutine define_1d_elements                                          
+ Entering subroutine element_connectivity_1d                                     
+ Exiting subroutine element_connectivity_1d                                     
+ umbilical inlet element number =           1
+ umbilical inlet element number =        2201
+ Entering subroutine evaluate_ordering                                           
+ Exiting subroutine evaluate_ordering                                           
+ Exiting subroutine define_1d_elements                                          
+ Entering subroutine append_units                                                
+ Exiting subroutine append_units                                                
+ Entering subroutine add_matching_mesh                                           
+ Entering subroutine reallocate_node_elem_arrays                                 
+ Exiting subroutine reallocate_node_elem_arrays                                 
+ venous umbilical outlet element number       76771
+ Exiting subroutine add_matching_mesh                                           
+ Entering subroutine define_rad_from_file                                        
+ Exiting subroutine define_rad_from_file                                        
+ Entering subroutine define_ven_rad_from_art                                     
+ Exiting subroutine define_ven_rad_from_art                                     
+ Entering subroutine calc_terminal_unit_length                                   
+ Exiting subroutine calc_terminal_unit_length                                   
+ Entering subroutine evaluate_prq                                                
+ Entering subroutine calc_depvar_maps                                            
+ Exiting subroutine calc_depvar_maps                                            
+ Entering subroutine boundary_conditions                                         
+ Exiting subroutine boundary_conditions                                         
+ Entering subroutine boundary_conditions                                         
+ Exiting subroutine boundary_conditions                                         
+ Entering subroutine calculate_resistance                                        
+ Exiting subroutine calculate_resistance                                        
+ Entering subroutine calc_sparse_size                                            
+ Entering subroutine calc_sparse_1dtree                                          
+ Exiting subroutine calc_sparse_1dtree                                          
+ Entering subroutine tree_resistance                                             
+ tree resistance to initialise solution:   0.80894168009169276     
+ Exiting subroutine tree_resistance                                             
+ Entering subroutine initialise_solution                                         
+ Exiting subroutine initialise_solution                                         
+ Entering subroutine pmgmres_ilu_cr                                              
+ Exiting subroutine pmgmres_ilu_cr                                              
+ Entering subroutine map_solution_to_mesh                                        
+ Exiting subroutine map_solution_to_mesh                                        
+ Entering subroutine map_flow_to_terminals                                       
+ Exiting subroutine map_flow_to_terminals                                       
+ Exiting subroutine evaluate_prq                                                
+ Entering subroutine calculate_stats                                             
+ Arterial elems count       76770
+ Arterial vascular volume (cm**3) =    7.8089325019065647     
+ Capillary unit count =       36139
+ Capillary volume (cm**3) =   0.60126514548783971     
+ Total capillary surface area (cm**2) =    339.02429506047622     
+ Venous vascular volume (cm**3) =    31.079225109595594     
+ Total vascular volume (cm**3) =    39.489422756989995     
+ Volume of vessels with diameter smaller than   0.11650000000000001       mm (cm**3) =   0.85608293557048210     
+ Number of capillary convolutes per generation =            6
+ Number of capillary generations per terminal unit =            3
+ Resistance of capillary conduits (Pa.s/mm**3) =   20342.279490277921     
+ Resistance of all generations of capillaries per terminal unit (Pa.s/mm**3) =   4232.8994046555054     
+ Effective length of each terminal unit (mm) =  0.40072235845129345     
+ Inlet pressure (Pa) =   6650.0000000000000     
+ Inlet pressure (mmHg) =    49.879239735377503     
+ Outlet pressure (Pa) =   2660.0000000000000     
+ Outlet pressure (mmHg) =   19.951695894151001     
+ Flow (sum of all inlet flows) (mm3/s) =   4723.9071006718323     
+ Flow (sum of all inlet flows) (ml/min) =   283.43442604030992     
+ Total vascular resistance (Pin-Pout)/Flow (Pa.s/mm**3) =   0.84463981085329631     
+ Vessel diameter (mm) by Strahler order:
+ Strahler_order,number_of_elements,mean_diameter,min_diameter,max_diameter,std
+           1 ,      108419 ,      108419 ,   9.2724182918958467E-002 ,   5.9999999999999998E-002 ,  0.73681200000000002      ,   3.7700299932209448E-002
+           2 ,       43840 ,       43840 ,  0.15601699009521697      ,  0.10397980790832195      ,  0.69899999999999995      ,   5.2180196901694731E-002
+           3 ,       17018 ,       17018 ,  0.22351546195234862      ,  0.14869112530890041      ,   1.7823240000000000      ,   7.7551463416117683E-002
+           4 ,        6786 ,        6786 ,  0.33145360471372626      ,  0.16475580000000001      ,   4.3379599999999998      ,  0.15799217312805799     
+           5 ,        3238 ,        3238 ,  0.56460389938937716      ,  0.11650000000000001      ,   5.1696799999999996      ,  0.43428310086678290     
+           6 ,        2416 ,        2416 ,  0.96473532351462721      ,  0.10000000000000001      ,   10.239319999999999      ,  0.80108639450609898     
+           7 ,        3494 ,        3494 ,   1.3386603301879343      ,  0.11650000000000001      ,   14.862880000000001      ,  0.90363162794859575     
+           8 ,        2044 ,        2044 ,   1.7944381035727679      ,  0.11650000000000001      ,   15.249840000000001      ,  0.99396127382269917     
+           9 ,        1542 ,        1542 ,   2.5981261358305616      ,  0.34949999999999998      ,   12.217079999999999      ,   1.2500803192315011     
+          10 ,         556 ,         556 ,   3.5419205611510858      ,   1.0018180000000001      ,   8.6559200000000001      ,   1.5965708566592232     
+          11 ,         325 ,         325 ,   5.5909171446153820      ,   1.5538300000000000      ,   18.448000000000000      ,   3.4581809471260945     
+ Arterial vessel diameter (mm) by Strahler order:
+ Strahler_order,number_of_elements,mean_diameter,min_diameter,max_diameter,std
+           1 ,       36140 ,   7.2723881091114995E-002 ,   7.2713152383441920E-002 ,  0.36840600000000001      ,   1.6289945939531431E-003
+           2 ,       21920 ,  0.10401132673017825      ,  0.10397980790832195      ,  0.34949999999999998      ,   2.6969558137946836E-003
+           3 ,        8509 ,  0.14901030796822956      ,  0.14869112530890041      ,  0.89116200000000001      ,   1.3611928706606474E-002
+           4 ,        3393 ,  0.22096906980914585      ,  0.16475580000000001      ,   2.1689799999999999      ,   7.1427429791764113E-002
+           5 ,        1619 ,  0.37640259959294142      ,  0.11650000000000001      ,   2.5848399999999998      ,  0.24753349870544275     
+           6 ,        1208 ,  0.64315688234308654      ,  0.10000000000000001      ,   5.1196599999999997      ,  0.46403737678615942     
+           7 ,        1747 ,  0.89244022012528468      ,  0.11650000000000001      ,   7.4314400000000003      ,  0.49696588712092360     
+           8 ,        1022 ,   1.1962920690485164      ,  0.11650000000000001      ,   7.6249200000000004      ,  0.50206785805990328     
+           9 ,         771 ,   1.7320840905537105      ,  0.34949999999999998      ,   6.1085399999999996      ,  0.57014804405263486     
+          10 ,         278 ,   2.3612803741007227      ,   1.0018180000000001      ,   4.3279600000000000      ,  0.67974326007846886     
+          11 ,         163 ,   3.7264786748466263      ,   1.5538300000000000      ,   9.2240000000000002      ,   1.8386014099315720     
+ Venous vessel diameter (mm) by Strahler order:
+ Strahler_order,number_of_elements,mean_diameter,min_diameter,max_diameter,std
+           1 ,       36140 ,  0.14544776218222999      ,  0.14542630476688384      ,  0.73681200000000002      ,   3.2579891879062862E-003
+           2 ,       21920 ,  0.20802265346035650      ,  0.20795961581664391      ,  0.69899999999999995      ,   5.3939116275893671E-003
+           3 ,        8509 ,  0.29802061593645912      ,  0.29738225061780083      ,   1.7823240000000000      ,   2.7223857413212947E-002
+           4 ,        3393 ,  0.44193813961829170      ,  0.32951160000000002      ,   4.3379599999999998      ,  0.14285485958352823     
+           5 ,        1619 ,  0.75280519918588285      ,  0.23300000000000001      ,   5.1696799999999996      ,  0.49506699741088550     
+           6 ,        1208 ,   1.2863137646861731      ,  0.20000000000000001      ,   10.239319999999999      ,  0.92807475357231883     
+           7 ,        1747 ,   1.7848804402505694      ,  0.23300000000000001      ,   14.862880000000001      ,  0.99393177424184720     
+           8 ,        1022 ,   2.3925841380970327      ,  0.23300000000000001      ,   15.249840000000001      ,   1.0041357161198066     
+           9 ,         771 ,   3.4641681811074210      ,  0.69899999999999995      ,   12.217079999999999      ,   1.1402960881052697     
+          10 ,         278 ,   4.7225607482014453      ,   2.0036360000000002      ,   8.6559200000000001      ,   1.3594865201569377     
+          11 ,         162 ,   7.4668644938271616      ,   3.1076600000000001      ,   18.448000000000000      ,   3.6842588122203841     
+ Coefficient of variation for terminal flow (%) =    55.906392044116629     
+ Mean terminal flow (mm3/s) =   0.13071493679049984     
+ Standard deviation of terminal flow (mm3/s) =    7.3078005022316081E-002
+ Terminal flow (mm**3/s) by generation:
+ Generation,number_of_terminal_units,mean_flow,min_flow,max_flow,std
+           1 ,0,0,0,0,0
+           2 ,0,0,0,0,0
+           3 ,0,0,0,0,0
+           4 ,0,0,0,0,0
+           5 ,0,0,0,0,0
+           6 ,0,0,0,0,0
+           7 ,           5 ,  0.18879676442685706      ,   4.9232763794250900E-002 ,  0.32637101408465696      ,   9.1871796411188075E-002
+           8 ,          27 ,  0.24467555772130190      ,  0.12874001912784649      ,  0.35593404466014533      ,   6.2637185218113942E-002
+           9 ,         100 ,  0.23950552350505933      ,  0.12112308074039291      ,  0.44710002748489330      ,   7.5896061409189877E-002
+          10 ,         180 ,  0.22168097720474728      ,   7.1054139085759971E-003 ,  0.43607720018901830      ,   8.6200384803377259E-002
+          11 ,         178 ,  0.13705018742607269      ,   5.5357394651824876E-003 ,  0.40514573406685717      ,  0.10216572723710383     
+          12 ,         417 ,  0.12975013160076682      ,   3.0272565287492448E-003 ,  0.46153108416522937      ,  0.10273158736518799     
+          13 ,         790 ,  0.13297216750257151      ,   2.7451051045093156E-003 ,  0.39206219207233384      ,   8.7327790175132550E-002
+          14 ,        1412 ,  0.13606875308455699      ,   2.2064409683026920E-003 ,  0.39169028434075293      ,   7.6606901047806070E-002
+          15 ,        1658 ,  0.14240437552181512      ,   1.6392759100654630E-003 ,  0.50637470710220622      ,   8.3991824662433254E-002
+          16 ,        1793 ,  0.13355396814981293      ,   1.4974731038966682E-003 ,  0.43379917201192142      ,   8.2903609230895833E-002
+          17 ,        2456 ,  0.12733065593774645      ,   1.2372126027756780E-003 ,  0.42670865654091855      ,   7.4912718456169189E-002
+          18 ,        2393 ,  0.12298481850231925      ,   9.2327934216950014E-004 ,  0.38486538846231411      ,   7.4873659414023672E-002
+          19 ,        2115 ,  0.12811139311955685      ,   1.0966359833221549E-003 ,  0.41255254069593061      ,   7.4909696701477804E-002
+          20 ,        1629 ,  0.13339312974157300      ,   7.4399198724925571E-004 ,  0.41766245077175107      ,   6.3194380831581437E-002
+          21 ,        1812 ,  0.13532628432061883      ,   9.4537034854307467E-004 ,  0.39540946053074943      ,   6.4029994832977236E-002
+          22 ,        1796 ,  0.13254603006288981      ,   9.2962392335927992E-003 ,  0.36179817728288743      ,   6.1473792539340322E-002
+          23 ,        1276 ,  0.11594715389673912      ,   7.9247686410908735E-003 ,  0.38176598856095040      ,   7.0100351161184044E-002
+          24 ,        1516 ,  0.12825554359974023      ,   7.0615143330006614E-003 ,  0.44451062861664670      ,   8.0035826233777682E-002
+          25 ,        1549 ,  0.12643046387885309      ,   8.8766129899263326E-003 ,  0.45447917664909271      ,   8.4969790485195609E-002
+          26 ,        1514 ,  0.13047590145669541      ,   6.5381102598046515E-003 ,  0.47395386567709280      ,   8.0140693486191766E-002
+          27 ,        1666 ,  0.13921323356324580      ,   6.5227342206358998E-003 ,  0.40022390017169812      ,   7.2060453538434238E-002
+          28 ,        1386 ,  0.13383786317216512      ,   4.1443158242685666E-003 ,  0.37715159927562147      ,   6.6431862217167681E-002
+          29 ,        1154 ,  0.12994965679444301      ,   6.0126871018930522E-003 ,  0.34823494211363643      ,   6.4789651216806868E-002
+          30 ,        1589 ,  0.13480716330891118      ,   7.1900226711279916E-003 ,  0.39019998968519171      ,   6.9296072213928292E-002
+          31 ,        1513 ,  0.12802665731866231      ,   8.7640799062514377E-003 ,  0.31985870219491763      ,   6.1070993785481670E-002
+          32 ,        1982 ,  0.13009542592238901      ,   1.1363516681129084E-002 ,  0.35049301193324894      ,   5.7517808713140856E-002
+          33 ,        1578 ,  0.12013079813410674      ,   4.5070645093456202E-003 ,  0.32606608816887839      ,   5.1079177470012865E-002
+          34 ,         561 ,  0.10114611753560239      ,   1.6043484111412969E-002 ,  0.26054232140489408      ,   4.2763587440027423E-002
+          35 ,          80 ,   8.3263055907206535E-002 ,   1.3334414793076966E-002 ,  0.17077640520971701      ,   3.3141054340293227E-002
+          36 ,          11 ,   6.8694688397376386E-002 ,   3.4999002062008538E-002 ,  0.10425974200504046      ,   2.4170771735388022E-002
+          37 ,           1 ,   3.9838587128883239E-002 ,   3.9838587128883239E-002 ,   3.9838587128883239E-002 ,   0.0000000000000000     
+          38 ,           2 ,   1.4942507524800870E-002 ,   1.4261076481519721E-002 ,   1.5623938568082018E-002 ,   6.8143104328114833E-004
+ Flow at inlet element number            1 (mm3/s) =   1813.1158079206389     
+ Flow at inlet element number            1 (ml/min) =   108.78694847523833     
+ Pressure at inlet node         105 inlet element           1 (Pa) =   6650.0000000000000     
+ Pressure at inlet node         105 inlet element           1 (mmHg) =   49.879239735377503     
+ Flow at inlet element number         2201 (mm3/s) =   2910.7912927511934     
+ Flow at inlet element number         2201 (ml/min) =   174.64747756507160     
+ Pressure at inlet node        1997 inlet element        2201 (Pa) =   6650.0000000000000     
+ Pressure at inlet node        1997 inlet element        2201 (mmHg) =   49.879239735377503     
+ Number of terminal units below inlet element           1 =       14343
+ Number of terminal units below inlet element        2201 =       21796
+ Arterial volume fed by inlet element           1 (cm3) =   2.6620991438129962     
+ Arterial volume fed by inlet element        2201 (cm3) =   5.0491614374888005     
+ Coefficient of variation for terminal flow (%) under inlet element           1 =   59.239549581222562     
+ Mean terminal flow (mm3/s) under inlet element           1 =  0.12641119765186351     
+ Standard deviation of terminal flow (mm3/s) under inlet element           1 =   7.4885424109192938E-002
+ Coefficient of variation for terminal flow (%) under inlet element        2201 =   53.706228674353405     
+ Mean terminal flow (mm3/s) under inlet element        2201 =  0.13354704040884638     
+ Standard deviation of terminal flow (mm3/s) under inlet element        2201 =   7.1723078909806184E-002
+ Exiting subroutine calculate_stats                                             
+ Entering subroutine get_ne_radius                                               
+ Exiting subroutine get_ne_radius                                               
+Time spent solving is:  154.404718
