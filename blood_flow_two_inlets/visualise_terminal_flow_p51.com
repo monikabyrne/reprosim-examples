@@ -1,8 +1,8 @@
 
 #chorionic tree
-gfx read node ../inputs_patient_51/chorionic_tree/chor_tree reg tree
-gfx read elem ../inputs_patient_51/chorionic_tree/chor_tree reg tree
-gfx read elem ../inputs_patient_51/chorionic_tree/p51_chor_tree_radii_2_inlets reg tree
+gfx read node inputs_patient_51/chorionic_tree/chor_tree reg tree
+gfx read elem inputs_patient_51/chorionic_tree/chor_tree reg tree
+gfx read elem inputs_patient_51/chorionic_tree/p51_chor_tree_radii_2_inlets reg tree
 
 # Create Tree
 gfx modify g_element "/" general clear;
